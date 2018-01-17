@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 use JMS\Serializer\Annotation\Groups;
 
 /**
@@ -29,6 +30,8 @@ class LigneCommande
      *
      * @ORM\Column(name="quantite", type="integer", nullable=false)
      *
+     * @JMS\Type("integer")
+     *
      * @Groups({"toSerialize"})
      */
     private $quantite;
@@ -40,6 +43,8 @@ class LigneCommande
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_article", referencedColumnName="id")
      * })
+     *
+     * @JMS\Type("App\Entity\Article")
      *
      * @Groups({"toSerialize"})
      */
@@ -54,6 +59,8 @@ class LigneCommande
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_commande", referencedColumnName="id")
      * })
+     *
+     * @JMS\Type("App\Entity\Commande")
      *
      * @Groups({"toSerialize"})
      */

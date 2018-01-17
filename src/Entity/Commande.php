@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 use JMS\Serializer\Annotation\Groups;
 
 /**
@@ -29,6 +30,8 @@ class Commande
      *
      * @ORM\Column(name="date", type="datetime", nullable=false)
      *
+     * @JMS\Type("date")
+     *
      * @Groups({"toSerialize"})
      */
     private $date;
@@ -40,6 +43,8 @@ class Commande
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_client", referencedColumnName="id")
      * })
+     *
+     * @JMS\Type("App\Entity\Client")
      *
      * @Groups({"toSerialize"})
      */

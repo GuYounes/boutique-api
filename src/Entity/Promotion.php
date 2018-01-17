@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 use JMS\Serializer\Annotation\Groups;
 
 /**
@@ -20,6 +21,8 @@ class Promotion
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      *
+     * @JMS\Type("datetime")
+     *
      * @Groups({"toSerialize"})
      */
     private $dateDebut;
@@ -29,6 +32,8 @@ class Promotion
      *
      * @ORM\Column(name="date_fin", type="datetime", nullable=false)
      *
+     * @JMS\Type("datetime")
+     *
      * @Groups({"toSerialize"})
      */
     private $dateFin;
@@ -37,6 +42,8 @@ class Promotion
      * @var int
      *
      * @ORM\Column(name="pourcentage", type="integer", nullable=false)
+     *
+     * @JMS\Type("integer")
      *
      * @Groups({"toSerialize"})
      */
@@ -51,6 +58,8 @@ class Promotion
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_article", referencedColumnName="id")
      * })
+     *
+     * @JMS\Type("App\Entity\Article")
      *
      * @Groups({"toSerialize"})
      */

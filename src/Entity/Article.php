@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 use JMS\Serializer\Annotation\Groups;
 
 /**
@@ -29,6 +30,8 @@ class Article
      *
      * @ORM\Column(name="reference", type="string", length=255, nullable=false)
      *
+     * @JMS\Type("string")
+     *
      * @Groups({"toSerialize"})
      */
     private $reference;
@@ -37,6 +40,8 @@ class Article
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255, nullable=false)
+     *
+     * @JMS\Type("string")
      *
      * @Groups({"toSerialize"})
      */
@@ -47,6 +52,8 @@ class Article
      *
      * @ORM\Column(name="tarif", type="float", precision=10, scale=2, nullable=false)
      *
+     * @JMS\Type("float")
+     *
      * @Groups({"toSerialize"})
      */
     private $tarif;
@@ -55,6 +62,8 @@ class Article
      * @var string
      *
      * @ORM\Column(name="visuel", type="string", length=255, nullable=false)
+     *
+     * @JMS\Type("string")
      *
      * @Groups({"toSerialize"})
      */
@@ -67,6 +76,8 @@ class Article
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_categorie", referencedColumnName="id")
      * })
+     *
+     * @JMS\Type("App\Entity\Categorie")
      *
      * @Groups({"toSerialize"})
      */

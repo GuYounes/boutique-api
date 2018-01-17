@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 use JMS\Serializer\Annotation\Groups;
 
 /**
@@ -29,6 +30,8 @@ class Client
      *
      * @ORM\Column(name="nom", type="string", length=255, nullable=false)
      *
+     * @JMS\Type("string")
+     *
      * @Groups({"toSerialize"})
      */
     private $nom;
@@ -38,6 +41,8 @@ class Client
      *
      * @ORM\Column(name="prenom", type="string", length=255, nullable=false)
      *
+     * @JMS\Type("string")
+     *
      * @Groups({"toSerialize"})
      */
     private $prenom;
@@ -46,6 +51,8 @@ class Client
      * @var string
      *
      * @ORM\Column(name="ville", type="string", length=255, nullable=false)
+     *
+     * @JMS\Type("string")
      *
      * @Groups({"toSerialize"})
      */
