@@ -19,9 +19,6 @@ class ArticleController extends Controller
      */
     public function getArticleAction(Request $request, Article $article)
     {
-        /*$em = $this->getDoctrine()->getManager();*/
-        /*$em->flush();*/
-
         $serializer = Serializer::create()->build();
         $jsonContent = $serializer->serialize($article, 'json'  , SerializationContext::create()->setGroups(array('toSerialize')));
         return new Response($jsonContent);
@@ -85,7 +82,6 @@ class ArticleController extends Controller
     public function updateArticleAction(Request $request, Article $article) 
     {
         $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(Article::class);
 
         if(!$article) return new Response("this article doesn't exist");
 
