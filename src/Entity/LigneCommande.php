@@ -21,6 +21,8 @@ class LigneCommande
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      *
+     * @JMS\Type("int")
+     *
      * @Groups({"toSerialize"})
      */
     private $idLigne;

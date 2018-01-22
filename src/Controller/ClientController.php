@@ -13,15 +13,7 @@ use JMS\Serializer\SerializationContext;
 class ClientController extends Controller
 {
     /**
-     * @Route("/client", name="client")
-     */
-    public function index()
-    {
-        return new Response('Welcome to your new controller!');
-    }
-
-    /**
-     * @Route("/client/{id}", name="get_client", requirements={"_format": "json"}, methods={"GET"})
+     * @Route("/clients/{id}", name="get_client", requirements={"_format": "json"}, methods={"GET"})
      */
     public function getClientAction(Request $request, Client $client)
     {

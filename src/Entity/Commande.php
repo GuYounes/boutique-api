@@ -21,6 +21,8 @@ class Commande
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      *
+     * @JMS\Type("int")
+     *
      * @Groups({"toSerialize"})
      */
     private $id;
@@ -30,7 +32,7 @@ class Commande
      *
      * @ORM\Column(name="date", type="datetime", nullable=false)
      *
-     * @JMS\Type("date")
+     * @JMS\Type("DateTime<'Y-m-d'>")
      *
      * @Groups({"toSerialize"})
      */
@@ -87,7 +89,7 @@ class Commande
      */
     public function getClient()
     {
-        return $this->idClient;
+        return $this->client;
     }
 
     /**

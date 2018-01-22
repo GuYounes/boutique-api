@@ -44,19 +44,13 @@ class ArticleController extends Controller
     public function addArticleAction(Request $request) 
     {
         $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(Categorie::class);
-        
-        // categorie non donné par le json pour le moment
-        $categorie = $repo->find(1);
 
         $json = $request->getContent();       
 
         $serializer = Serializer::create()->build();
         $article = $serializer->deserialize($json, "App\Entity\Article", 'json');
 
-        $article->setCategorie($categorie);
-
-        $em->persist($article);
+        $em->merge($article);
         $em->flush();
 
         $jsonArticle = $serializer->serialize($article, 'json'  , SerializationContext::create()->setGroups(array('toSerialize')));
@@ -83,8 +77,6 @@ class ArticleController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        if(!$article) return new Response("this article doesn't exist");
-
         $serializer = Serializer::create()->build();
         $newArticle = $serializer->deserialize($request->getContent(), "App\Entity\Article", 'json');
 
@@ -94,6 +86,8 @@ class ArticleController extends Controller
         if($newArticle->getVisuel()) $article->setVisuel($newArticle->getVisuel());
         if($newArticle->getCategorie()) $article->setCategorie($newArticle->getCategorie());   
 
+        var_dump($article);
+        $em->merge($article);
         $em->flush();
 
         $jsonArticle = $serializer->serialize($article, 'json'  , SerializationContext::create()->setGroups(array('toSerialize')));

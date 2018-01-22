@@ -21,6 +21,8 @@ class Client
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      *
+     * @JMS\Type("int")
+     *
      * @Groups({"toSerialize"})
      */
     private $id;
