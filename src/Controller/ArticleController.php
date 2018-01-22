@@ -76,6 +76,7 @@ class ArticleController extends Controller
     public function updateArticleAction(Request $request, Article $article) 
     {
         $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository(Categorie::class);
 
         $serializer = Serializer::create()->build();
         $newArticle = $serializer->deserialize($request->getContent(), "App\Entity\Article", 'json');
@@ -84,10 +85,12 @@ class ArticleController extends Controller
         if($newArticle->getNom()) $article->setNom($newArticle->getNom());
         if($newArticle->getTarif()) $article->setTarif($newArticle->getTarif());
         if($newArticle->getVisuel()) $article->setVisuel($newArticle->getVisuel());
-        if($newArticle->getCategorie()) $article->setCategorie($newArticle->getCategorie());   
-
-        var_dump($article);
-        $em->merge($article);
+        if($newArticle->getCategorie()) 
+        {
+            $categorie = $repo->find($newArticle->getCategorie()->getId());
+            $article->setCategorie($categorie);
+        }
+        
         $em->flush();
 
         $jsonArticle = $serializer->serialize($article, 'json'  , SerializationContext::create()->setGroups(array('toSerialize')));

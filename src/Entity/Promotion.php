@@ -21,7 +21,7 @@ class Promotion
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      *
-     * @JMS\Type("datetime")
+     * @JMS\Type("DateTime<'Y-m-d'>")
      *
      * @Groups({"toSerialize"})
      */
@@ -32,7 +32,7 @@ class Promotion
      *
      * @ORM\Column(name="date_fin", type="datetime", nullable=false)
      *
-     * @JMS\Type("datetime")
+     * @JMS\Type("DateTime<'Y-m-d'>")
      *
      * @Groups({"toSerialize"})
      */

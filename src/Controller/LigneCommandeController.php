@@ -44,25 +44,13 @@ class LigneCommandeController extends Controller
     public function addLigneCommandeAction(Request $request) 
     {
         $em = $this->getDoctrine()->getManager();
-        $repoCommande = $em->getRepository(Commande::class);
-        
-        // categorie non donné par le json pour le moment
-        $commande = $repoCommande->find(1);
-
-        $repoArticle = $em->getRepository(ARticle::class);
-        
-        // categorie non donné par le json pour le moment
-        $article = $repoArticle->find(1);
 
         $json = $request->getContent();       
 
         $serializer = Serializer::create()->build();
         $lignecommande = $serializer->deserialize($json, "App\Entity\LigneCommande", 'json');
 
-        $lignecommande->setCommande($commande);
-        $lignecommande->setArticle($article);
-
-        $em->persist($lignecommande);
+        $em->merge($lignecommande);
         $em->flush();
 
         $jsonLigneCommande = $serializer->serialize($lignecommande, 'json'  , SerializationContext::create()->setGroups(array('toSerialize')));
@@ -89,14 +77,23 @@ class LigneCommandeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        if(!$lignecommande) return new Response("this lignecommande doesn't exist");
+        $repoArticle = $em->getRepository(Article::class);
+        $repoCommande = $em->getRepository(Commande::class);
 
         $serializer = Serializer::create()->build();
         $newLigneCommande = $serializer->deserialize($request->getContent(), "App\Entity\LigneCommande", 'json');
 
-        if($newLigneCommande->getQuantite()) $article->setQuantite($newLigneCommande->getQuantite());
-        if($newLigneCommande->getArticle()) $article->setArticle($newLigneCommande->getArticle());
-        if($newLigneCommande->getCommande()) $article->setCommande($newLigneCommande->getCommande());
+        if($newLigneCommande->getQuantite()) $lignecommande->setQuantite($newLigneCommande->getQuantite());
+        if($newLigneCommande->getArticle()) 
+        {
+            $article = $repoArticle->find($newLigneCommande->getArticle()->getId());
+            $lignecommande->setArticle($article);
+        }
+        if($newLigneCommande->getCommande()) 
+        {
+            $commande = $repoCommande->find($newLigneCommande->getCommande()->getId());
+            $lignecommande->setCommande($commande);
+        } 
 
         $em->flush();
 

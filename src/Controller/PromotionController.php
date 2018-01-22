@@ -43,19 +43,13 @@ class PromotionController extends Controller
     public function addPromotionAction(Request $request) 
     {
         $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(Article::class);
-        
-        // client non donné par le json pour le moment
-        $article = $repo->find(1);
 
         $json = $request->getContent();       
 
         $serializer = Serializer::create()->build();
-        $promotion = $serializer->deserialize($json, "App\Entity\Promotions", 'json');
+        $promotion = $serializer->deserialize($json, "App\Entity\Promotion", 'json');
 
-        $promotion->setArticle($article);
-
-        $em->persist($promotion);
+        $em->merge($promotion);
         $em->flush();
 
         $jsonPromotion = $serializer->serialize($promotion, 'json'  , SerializationContext::create()->setGroups(array('toSerialize')));

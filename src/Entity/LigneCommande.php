@@ -9,7 +9,7 @@ use JMS\Serializer\Annotation\Groups;
 /**
  * LigneCommande
  *
- * @ORM\Table(name="ligne_commande", indexes={@ORM\Index(name="id_article", columns={"id_article"}), @ORM\Index(name="id_commande", columns={"id_commande"})})
+ * @ORM\Table(name="ligne_commande", indexes={@ORM\Index(name="id_article", columns={"id_article"})})
  * @ORM\Entity
  */
 class LigneCommande
@@ -19,7 +19,7 @@ class LigneCommande
      *
      * @ORM\Column(name="id_ligne", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      *
      * @JMS\Type("int")
      *
@@ -55,8 +55,6 @@ class LigneCommande
     /**
      * @var Commande
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Commande")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_commande", referencedColumnName="id")
@@ -101,7 +99,7 @@ class LigneCommande
     }
 
     /**
-     * @return\Article
+     * @return Article
      */
     public function getArticle()
     {
@@ -121,7 +119,7 @@ class LigneCommande
      */
     public function getCommande()
     {
-        return $this->idCommande;
+        return $this->commande;
     }
 
     /**

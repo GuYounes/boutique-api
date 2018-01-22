@@ -74,15 +74,18 @@ class CommandeController extends Controller
      */
     public function updateCommandeAction(Request $request, Commande $commande) 
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager('default');
+        $repo = $em->getRepository(Client::class);
 
         $serializer = Serializer::create()->build();
         $newCommande = $serializer->deserialize($request->getContent(), "App\Entity\Commande", 'json');
 
-        var_dump($newCommande);
-
         if($newCommande->getDate()) $commande->setDate($newCommande->getDate());
-        if($newCommande->getClient()) $commande->setClient($newCommande->getClient());
+        if($newCommande->getClient()) 
+        {
+            $client = $repo->find($newCommande->getClient()->getId());
+            $commande->setClient($client);
+        }
 
         $em->flush();
 
