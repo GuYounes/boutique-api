@@ -40,6 +40,16 @@ class ArticleController extends Controller
 
     /**
      * @Route("/articles", name="add_article", requirements={"_format": "json"}, methods={"POST"})
+
+        {
+            "reference" : "REFTEST",
+            "nom" : "NOMTEST",
+            "tarif" : 999.99,
+            "visuel" : "VISUELTEST",
+            "categorie" : {
+                "id": 2
+            }
+        }
      */
     public function addArticleAction(Request $request) 
     {
@@ -72,6 +82,16 @@ class ArticleController extends Controller
 
     /**
      * @Route("/articles/{id}", name="update_article", requirements={"_format": "json"}, methods={"PUT"})
+
+        {
+            "reference" : "REFTEST",
+            "nom" : "NOMTEST",
+            "tarif" : 199.99,
+            "visuel" : "VISUELTEST",
+            "categorie" : {
+                "id": 2
+            }
+        }
      */
     public function updateArticleAction(Request $request, Article $article) 
     {

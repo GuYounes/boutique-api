@@ -15,13 +15,13 @@ use JMS\Serializer\Annotation\Groups;
 class Promotion
 {
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="date_debut", type="datetime", nullable=false)
+     * @ORM\Column(name="date_debut", type="string", length=255, nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      *
-     * @JMS\Type("DateTime<'Y-m-d'>")
+     * @JMS\Type("string")
      *
      * @Groups({"toSerialize"})
      */
@@ -66,7 +66,7 @@ class Promotion
     private $article;
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getDateDebut()
     {
@@ -74,7 +74,7 @@ class Promotion
     }
 
     /**
-     * @param \DateTime $dateDebut
+     * @param string $dateDebut
      */
     public function setDateDebut($dateDebut)
     {
@@ -118,7 +118,7 @@ class Promotion
      */
     public function getArticle()
     {
-        return $this->idArticle;
+        return $this->article;
     }
 
     /**
