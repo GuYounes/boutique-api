@@ -40,16 +40,6 @@ class LigneCommandeController extends Controller
 
     /**
      * @Route("/ligneCommande", name="add_ligneCommande", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"POST"})
-
-        {
-            "commande": {
-                "id": 1 
-            },
-            "article": {
-                "id": 9
-            },
-            "quantite": 10
-        }
      */
     public function addLigneCommandeAction(Request $request) 
     {
@@ -82,13 +72,6 @@ class LigneCommandeController extends Controller
 
     /**
      * @Route("/ligneCommande/{id}", name="update_ligneCommande", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"PUT"})
-
-        {
-            "article": {
-                "id": 10
-            },
-            "quantite": 10
-        }
      */
     public function updateLigneCommandeAction(Request $request, LigneCommande $lignecommande) 
     {

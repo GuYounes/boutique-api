@@ -42,17 +42,6 @@ class ArticleController extends Controller
      */
     public function addArticleAction(Request $request) 
     {
-        /*
-        {
-          "reference" : "REFTEST",
-           "nom" : "NOMTEST",
-           "tarif" : 999.99,
-           "visuel" : "VISUELTEST",
-           "categorie" : {
-               "id": 2
-           }
-        }
-     */
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository(Categorie::class);
 
@@ -90,17 +79,6 @@ class ArticleController extends Controller
      */
     public function updateArticleAction(Request $request, Article $article) 
     {
-        /**
-        {
-            "reference" : "REFTEST",
-            "nom" : "NOMTEST",
-            "tarif" : 199.99,
-            "visuel" : "VISUELTEST",
-            "categorie" : {
-                "id": 2
-            }
-        }
-        */
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository(Categorie::class);
 

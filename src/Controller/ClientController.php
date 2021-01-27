@@ -38,12 +38,6 @@ class ClientController extends Controller
 
     /**
      * @Route("/clients", name="add_client", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"POST"})
-
-        {
-            "nom" : "nomclient_2",
-            "prenom" : "prenomclient_2",
-            "ville" : "villeclient_2"
-        }
      */
     public function addClientAction(Request $request) 
     {
@@ -76,12 +70,6 @@ class ClientController extends Controller
 
     /**
      * @Route("/clients/{id}", name="update_client", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"PUT"})
-
-        {
-            "nom" : "nomclient_2",
-            "prenom" : "prenomclient_2",
-            "ville" : "villeclient_2"
-        }
      */
     public function updateClientAction(Request $request, Client $client) 
     {

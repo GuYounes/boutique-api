@@ -38,11 +38,6 @@ class CategorieController extends Controller
 
     /**
      * @Route("/categories", name="add_categorie", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"POST"})
-
-        {
-            "nom": "VETEMENTerherererh",
-            "visuel": "shgereort.png"
-        }
      */
     public function addCategorieAction(Request $request) 
     {
@@ -75,11 +70,6 @@ class CategorieController extends Controller
 
     /**
      * @Route("/categories/{id}", name="update_categorie", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"PUT"})
-
-        {
-            "nom" : "NOMTESTUPDATE",
-            "tarif" : 10.99
-        }
      */
     public function updateCategorieAction(Request $request, Categorie $categorie) 
     {

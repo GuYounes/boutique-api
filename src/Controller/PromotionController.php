@@ -42,16 +42,6 @@ class PromotionController extends Controller
      */
     public function addPromotionAction(Request $request) 
     {
-    	/*
-        {
-            "article": {
-                "id": 10
-            },
-            "date_debut": "2018-01-24 13:08:26",
-            "date_fin": "2018-02-10",
-            "pourcentage": 50
-        }
-        */
         $em = $this->getDoctrine()->getManager();
 
         $json = $request->getContent();       
@@ -72,13 +62,6 @@ class PromotionController extends Controller
      */
     public function deletePromotionAction(Request $request) 
     {
-    	/*
-    	{
-        "article": {
-            "id": 10
-        },
-            "date_debut": "2018-01-24 13:08:26"
-        }*/
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository(Promotion::class);
 
@@ -98,16 +81,6 @@ class PromotionController extends Controller
      */
     public function updatePromotionAction(Request $request) 
     {
-    	/*
-        {
-            "article": {
-                "id": 10
-            },
-            "date_debut": "2018-01-24 13:08:26",
-            "date_fin": "2019-02-10",
-            "pourcentage": 70
-        }
-        */
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository(Promotion::class);
 
