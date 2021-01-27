@@ -15,7 +15,7 @@ use JMS\Serializer\SerializationContext;
 class LigneCommandeController extends Controller
 {
     /**
-     * @Route("/ligneCommandes/{id}", name="get_ligneCommand", requirements={"_format": "json"}, methods={"GET"})
+     * @Route("/ligneCommandes/{id}", name="get_ligneCommand", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"GET"})
      */
     public function getLigneCommandeAction(Request $request, LigneCommande $lignecommande)
     {
@@ -25,7 +25,7 @@ class LigneCommandeController extends Controller
     }
 
     /**
-     * @Route("/ligneCommandes", name="get_ligneCommandes", requirements={"_format": "json"}, methods={"GET"})
+     * @Route("/ligneCommandes", name="get_ligneCommandes", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"GET"})
      */
     public function getLigneCommandesAction(Request $request)
     {
@@ -39,7 +39,17 @@ class LigneCommandeController extends Controller
     }
 
     /**
-     * @Route("/ligneCommande", name="add_ligneCommande", requirements={"_format": "json"}, methods={"POST"})
+     * @Route("/ligneCommande", name="add_ligneCommande", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"POST"})
+
+        {
+            "commande": {
+                "id": 1 
+            },
+            "article": {
+                "id": 9
+            },
+            "quantite": 10
+        }
      */
     public function addLigneCommandeAction(Request $request) 
     {
@@ -59,7 +69,7 @@ class LigneCommandeController extends Controller
     }
 
     /**
-     * @Route("/ligneCommande/{id}", name="delete_ligneCommande", methods={"DELETE"})
+     * @Route("/ligneCommande/{id}", name="delete_ligneCommande", defaults={"_format": "json"}, methods={"DELETE"})
      */
     public function deleteLigneCommandeAction(LigneCommande $lignecommande) 
     {
@@ -71,7 +81,14 @@ class LigneCommandeController extends Controller
     }
 
     /**
-     * @Route("/ligneCommande/{id}", name="update_ligneCommande", requirements={"_format": "json"}, methods={"PUT"})
+     * @Route("/ligneCommande/{id}", name="update_ligneCommande", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"PUT"})
+
+        {
+            "article": {
+                "id": 10
+            },
+            "quantite": 10
+        }
      */
     public function updateLigneCommandeAction(Request $request, LigneCommande $lignecommande) 
     {

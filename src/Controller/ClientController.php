@@ -13,7 +13,7 @@ use JMS\Serializer\SerializationContext;
 class ClientController extends Controller
 {
     /**
-     * @Route("/clients/{id}", name="get_client", requirements={"_format": "json"}, methods={"GET"})
+     * @Route("/clients/{id}", name="get_client", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"GET"})
      */
     public function getClientAction(Request $request, Client $client)
     {
@@ -23,7 +23,7 @@ class ClientController extends Controller
     }
 
     /**
-     * @Route("/clients", name="get_clients", requirements={"_format": "json"}, methods={"GET"})
+     * @Route("/clients", name="get_clients", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"GET"})
      */
     public function getClientsAction(Request $request)
     {
@@ -37,7 +37,13 @@ class ClientController extends Controller
     }
 
     /**
-     * @Route("/clients", name="add_client", requirements={"_format": "json"}, methods={"POST"})
+     * @Route("/clients", name="add_client", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"POST"})
+
+        {
+            "nom" : "nomclient_2",
+            "prenom" : "prenomclient_2",
+            "ville" : "villeclient_2"
+        }
      */
     public function addClientAction(Request $request) 
     {
@@ -57,7 +63,7 @@ class ClientController extends Controller
     }
 
     /**
-     * @Route("/clients/{id}", name="delete_client", methods={"DELETE"})
+     * @Route("/clients/{id}", name="delete_client", defaults={"_format": "json"}, methods={"DELETE"})
      */
     public function deleteClientAction(Client $client) 
     {
@@ -69,7 +75,13 @@ class ClientController extends Controller
     }
 
     /**
-     * @Route("/clients/{id}", name="update_client", requirements={"_format": "json"}, methods={"PUT"})
+     * @Route("/clients/{id}", name="update_client", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"PUT"})
+
+        {
+            "nom" : "nomclient_2",
+            "prenom" : "prenomclient_2",
+            "ville" : "villeclient_2"
+        }
      */
     public function updateClientAction(Request $request, Client $client) 
     {

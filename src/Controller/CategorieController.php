@@ -13,17 +13,17 @@ use JMS\Serializer\SerializationContext;
 class CategorieController extends Controller
 {
     /**
-     * @Route("/categories/{id}", name="get_categorie", requirements={"_format": "json"}, methods={"GET"})
+     * @Route("/categories/{id}", name="get_categorie", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"GET"})
      */
     public function getCategorieAction(Request $request, Categorie $categorie)
     {
         $serializer = Serializer::create()->build();
-        $jsonContent = $serializer->serialize($categorie, 'json'  , SerializationContext::create()->setGroups(array('toSerialize')));
+        $jsonContent = $serializer->serialize($categorie, 'json', SerializationContext::create()->setGroups(array('toSerialize')));
         return new Response($jsonContent);
     }
 
     /**
-     * @Route("/categories", name="get_categories", requirements={"_format": "json"}, methods={"GET"})
+     * @Route("/categories", name="get_categories", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"GET"})
      */
     public function getCategoriesAction(Request $request)
     {
@@ -31,13 +31,18 @@ class CategorieController extends Controller
         $repo = $em->getRepository(Categorie::class);
 
         $serializer = Serializer::create()->build();
-        $jsonContent = $serializer->serialize($repo->findAll(), 'json'  , SerializationContext::create()->setGroups(array('toSerialize')));
+        $jsonContent = $serializer->serialize($repo->findAll(), 'json', SerializationContext::create()->setGroups(array('toSerialize')));
 
         return new Response($jsonContent);
     }
 
     /**
-     * @Route("/categories", name="add_categorie", requirements={"_format": "json"}, methods={"POST"})
+     * @Route("/categories", name="add_categorie", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"POST"})
+
+        {
+            "nom": "VETEMENTerherererh",
+            "visuel": "shgereort.png"
+        }
      */
     public function addCategorieAction(Request $request) 
     {
@@ -51,13 +56,13 @@ class CategorieController extends Controller
         $em->persist($categorie);
         $em->flush();
 
-        $jsonCategorie = $serializer->serialize($categorie, 'json'  , SerializationContext::create()->setGroups(array('toSerialize')));
+        $jsonCategorie = $serializer->serialize($categorie, 'json', SerializationContext::create()->setGroups(array('toSerialize')));
 
         return new Response($jsonCategorie);
     }
 
     /**
-     * @Route("/categories/{id}", name="delete_categorie", methods={"DELETE"})
+     * @Route("/categories/{id}", name="delete_categorie", defaults={"_format": "json"}, methods={"DELETE"})
      */
     public function deleteCategorieAction(Categorie $categorie) 
     {
@@ -69,7 +74,12 @@ class CategorieController extends Controller
     }
 
     /**
-     * @Route("/categories/{id}", name="update_categorie", requirements={"_format": "json"}, methods={"PUT"})
+     * @Route("/categories/{id}", name="update_categorie", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"PUT"})
+
+        {
+            "nom" : "NOMTESTUPDATE",
+            "tarif" : 10.99
+        }
      */
     public function updateCategorieAction(Request $request, Categorie $categorie) 
     {

@@ -14,7 +14,7 @@ use JMS\Serializer\SerializationContext;
 class PromotionController extends Controller
 {
     /**
-     * @Route("/promotions/{id}", name="get_promotion", requirements={"_format": "json"}, methods={"GET"})
+     * @Route("/promotions/{id}", name="get_promotion", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"GET"})
      */
     public function getPromotionAction(Request $request, Promotion $promotion)
     {
@@ -24,7 +24,7 @@ class PromotionController extends Controller
     }
 
     /**
-     * @Route("/promotions", name="get_promotions", requirements={"_format": "json"}, methods={"GET"})
+     * @Route("/promotions", name="get_promotions", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"GET"})
      */
     public function getPromotionsAction(Request $request)
     {
@@ -38,17 +38,27 @@ class PromotionController extends Controller
     }
 
     /**
-     * @Route("/promotions", name="add_promotion", requirements={"_format": "json"}, methods={"POST"})
+     * @Route("/promotions", name="add_promotion", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"POST"})
      */
     public function addPromotionAction(Request $request) 
     {
+    	/*
+        {
+            "article": {
+                "id": 10
+            },
+            "date_debut": "2018-01-24 13:08:26",
+            "date_fin": "2018-02-10",
+            "pourcentage": 50
+        }
+        */
         $em = $this->getDoctrine()->getManager();
 
         $json = $request->getContent();       
 
         $serializer = Serializer::create()->build();
         $promotion = $serializer->deserialize($json, "App\Entity\Promotion", 'json');
-
+        
         $em->merge($promotion);
         $em->flush();
 
@@ -58,33 +68,56 @@ class PromotionController extends Controller
     }
 
     /**
-     * @Route("/promotions/{id}", name="delete_promotion", methods={"DELETE"})
+     * @Route("/promotions", name="delete_promotion", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"DELETE"})
      */
-    public function deletePromotionAction(Promotion $promotion) 
+    public function deletePromotionAction(Request $request) 
     {
+    	/*
+    	{
+        "article": {
+            "id": 10
+        },
+            "date_debut": "2018-01-24 13:08:26"
+        }*/
         $em = $this->getDoctrine()->getManager();
-        $em->remove($commande);
+        $repo = $em->getRepository(Promotion::class);
+
+        $serializer = Serializer::create()->build();
+        $newPromotion = $serializer->deserialize($request->getContent(), "App\Entity\Promotion", 'json');
+
+        $promotion = $repo->find(array("dateDebut" => $newPromotion->getDateDebut(), "article" => $newPromotion->getArticle()->getId()));
+
+        $em->remove($promotion);
         $em->flush();
 
         return new Response("deleted");
     }
 
     /**
-     * @Route("/promotions/{id}", name="update_promotion", requirements={"_format": "json"}, methods={"PUT"})
+     * @Route("/promotions", name="update_promotion", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"PUT"})
      */
-    public function updatePromotionAction(Request $request, Promotion $promotion) 
+    public function updatePromotionAction(Request $request) 
     {
+    	/*
+        {
+            "article": {
+                "id": 10
+            },
+            "date_debut": "2018-01-24 13:08:26",
+            "date_fin": "2019-02-10",
+            "pourcentage": 70
+        }
+        */
         $em = $this->getDoctrine()->getManager();
-
-        if(!$promotion) return new Response("this promotion doesn't exist");
+        $repo = $em->getRepository(Promotion::class);
 
         $serializer = Serializer::create()->build();
         $newPromotion = $serializer->deserialize($request->getContent(), "App\Entity\Promotion", 'json');
 
-        if($newPromotion->getDateDebut()) $promotion->setDateDebut($newPromotion->getDateDebut());
+        $promotion = $repo->find(array("dateDebut" => $newPromotion->getDateDebut(), "article" => $newPromotion->getArticle()->getId()));
+
         if($newPromotion->getDateFin()) $promotion->setDateFin($newPromotion->getDateFin());
         if($newPromotion->getPourcentage()) $promotion->setPourcentage($newPromotion->getPourcentage());
-        if($newPromotion->getArticle()) $promotion->setArticle($newPromotion->getArticle());
 
         $em->flush();
 

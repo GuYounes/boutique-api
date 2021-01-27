@@ -14,7 +14,7 @@ use JMS\Serializer\SerializationContext;
 class CommandeController extends Controller
 {
     /**
-     * @Route("/commandes/{id}", name="get_commande", requirements={"_format": "json"}, methods={"GET"})
+     * @Route("/commandes/{id}", name="get_commande", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"GET"})
      */
     public function getCommandeAction(Request $request, Commande $commande)
     {
@@ -24,7 +24,7 @@ class CommandeController extends Controller
     }
 
     /**
-     * @Route("/commandes", name="get_commandes", requirements={"_format": "json"}, methods={"GET"})
+     * @Route("/commandes", name="get_commandes", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"GET"})
      */
     public function getCommandesAction(Request $request)
     {
@@ -38,7 +38,14 @@ class CommandeController extends Controller
     }
 
     /**
-     * @Route("/commandes", name="add_commande", requirements={"_format": "json"}, methods={"POST"})
+     * @Route("/commandes", name="add_commande", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"POST"})
+
+        {
+            "date" : "2018-01-22",
+            "client": {
+                "id": 4
+            }
+        }
      */
     public function addCommandeAction(Request $request) 
     {
@@ -58,7 +65,7 @@ class CommandeController extends Controller
     }
 
     /**
-     * @Route("/commandes/{id}", name="delete_commande", methods={"DELETE"})
+     * @Route("/commandes/{id}", name="delete_commande", defaults={"_format": "json"}, methods={"DELETE"})
      */
     public function deleteCommandeAction(Commande $commande) 
     {
@@ -70,7 +77,14 @@ class CommandeController extends Controller
     }
 
     /**
-     * @Route("/commandes/{id}", name="update_commande", requirements={"_format": "json"}, methods={"PUT"})
+     * @Route("/commandes/{id}", name="update_commande", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"PUT"})
+
+        {
+            "date" : "2018-01-18",
+            "client": {
+                "id": 1
+            }
+        }
      */
     public function updateCommandeAction(Request $request, Commande $commande) 
     {

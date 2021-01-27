@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Entity\Article as Article;
@@ -15,7 +14,7 @@ use JMS\Serializer\SerializationContext;
 class ArticleController extends Controller
 {
     /**
-     * @Route("/articles/{id}", name="get_article", requirements={"_format": "json"}, methods={"GET"})
+     * @Route("/articles/{id}", name="get_article", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"GET"})
      */
     public function getArticleAction(Request $request, Article $article)
     {
@@ -25,7 +24,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * @Route("/articles", name="get_articles", requirements={"_format": "json"}, methods={"GET"})
+     * @Route("/articles", name="get_articles", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"GET"})
      */
     public function getArticlesAction(Request $request)
     {
@@ -39,18 +38,34 @@ class ArticleController extends Controller
     }
 
     /**
-     * @Route("/articles", name="add_article", requirements={"_format": "json"}, methods={"POST"})
+     * @Route("/articles", name="add_article", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"POST"})
      */
     public function addArticleAction(Request $request) 
     {
+        /*
+        {
+          "reference" : "REFTEST",
+           "nom" : "NOMTEST",
+           "tarif" : 999.99,
+           "visuel" : "VISUELTEST",
+           "categorie" : {
+               "id": 2
+           }
+        }
+     */
         $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository(Categorie::class);
 
         $json = $request->getContent();       
 
         $serializer = Serializer::create()->build();
         $article = $serializer->deserialize($json, "App\Entity\Article", 'json');
 
-        $em->merge($article);
+        $categorie = $repo->find(["id" => $article->getCategorie()->getId()]);
+
+        $article->setCategorie($categorie);
+
+        $em->persist($article);
         $em->flush();
 
         $jsonArticle = $serializer->serialize($article, 'json'  , SerializationContext::create()->setGroups(array('toSerialize')));
@@ -59,7 +74,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * @Route("/articles/{id}", name="delete_article", methods={"DELETE"})
+     * @Route("/articles/{id}", name="delete_article", defaults={"_format": "json"}, methods={"DELETE"})
      */
     public function deleteArticleAction(Article $article) 
     {
@@ -71,10 +86,21 @@ class ArticleController extends Controller
     }
 
     /**
-     * @Route("/articles/{id}", name="update_article", requirements={"_format": "json"}, methods={"PUT"})
+     * @Route("/articles/{id}", name="update_article", requirements={"_format": "json"}, defaults={"_format": "json"}, methods={"PUT"})
      */
     public function updateArticleAction(Request $request, Article $article) 
     {
+        /**
+        {
+            "reference" : "REFTEST",
+            "nom" : "NOMTEST",
+            "tarif" : 199.99,
+            "visuel" : "VISUELTEST",
+            "categorie" : {
+                "id": 2
+            }
+        }
+        */
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository(Categorie::class);
 
